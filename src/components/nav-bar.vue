@@ -1,28 +1,11 @@
 <template>
   <div>
-    <el-menu
-      :default-active="activeIndex2"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-      background-color="#4D5054"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-      </el-submenu>
-      <el-menu-item index="3">订单管理</el-menu-item>
-    </el-menu>
-
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+    <el-radio-group v-model="isCollapse">
       <el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>
     </el-radio-group>
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+             :collapse="isCollapse" @select="handleSelect">
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -41,7 +24,7 @@
           <el-menu-item index="1-4-1">选项1</el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="helloWord">
         <i class="el-icon-menu"></i>
         <span slot="title">导航二</span>
       </el-menu-item>
@@ -50,6 +33,10 @@
         <span slot="title">导航三</span>
       </el-menu-item>
     </el-menu>
+
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -57,8 +44,7 @@
 export default {
   data () {
     return {
-      isCollapse: true,
-      activeIndex2: '1'
+      isCollapse: true
     }
   },
   methods: {
@@ -69,15 +55,21 @@ export default {
       console.log(key, keyPath)
     },
     handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+      console.log('select', key, keyPath)
+      this.$router.push({name: key})
     }
   }
 }
 </script>
 
 <style>
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+  .el-menu-vertical-demo {
+    width: 100px;
+  }
+  .content {
+    padding: 0 0 0 30px;
+    float: left;
+    width: 950px;
+    min-height: 680px;
   }
 </style>
