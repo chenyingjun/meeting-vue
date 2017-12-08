@@ -2,8 +2,10 @@
   <div>
     <el-menu
       :default-active="activeIndex2"
+      class="el-menu-demo"
       mode="horizontal"
-      background-color="#545c64"
+      @select="handleSelect"
+      background-color="#4D5054"
       text-color="#fff"
       active-text-color="#ffd04b">
       <el-menu-item index="1">处理中心</el-menu-item>
@@ -64,6 +66,9 @@ export default {
       console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleSelect (key, keyPath) {
       console.log(key, keyPath)
     }
   }
