@@ -1,7 +1,21 @@
 <template>
   <div id="app">
-    <menu-bar></menu-bar>
-    <router-view class="child-container"/>
+    <el-container>
+      <el-header>
+        <menu-bar></menu-bar>
+      </el-header>
+      <el-container>
+        <el-aside>
+          <nav-bar></nav-bar>
+        </el-aside>
+        <el-main>
+          <router-view class="child-container"/>
+
+        </el-main>
+
+      </el-container>
+      <el-footer>Footer</el-footer>
+    </el-container>
   </div>
 </template>
 
@@ -23,24 +37,44 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body {
+  margin: 0px;
+}
+
+.el-header, .el-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  padding: 0px;
+}
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
 .child-container {
   min-height: 680px;
   margin-left: auto;
   margin-right: auto;
-}
-@media (min-width: 1200px) {
-  .container, .child-container {
-    width: 1170px;
-  }
-}
-@media (max-width: 1199px) {
-  .container, .child-container {
-    width: 970px;
-  }
-}
-@media (max-width: 991px) {
-  .container, .child-container {
-    width: 750px;
-  }
 }
 </style>

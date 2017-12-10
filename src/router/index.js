@@ -7,11 +7,6 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/nav',
-      name: 'nav',
-      component: () => import('@/components/nav-bar')
-    },
-    {
       path: '/helloWord',
       name: 'helloWord',
       component: () => import('@/views/HelloWorld')

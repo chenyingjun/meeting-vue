@@ -33,10 +33,6 @@
         <span slot="title">导航三</span>
       </el-menu-item>
     </el-menu>
-
-    <div class="content">
-      <router-view />
-    </div>
   </div>
 </template>
 
@@ -65,11 +61,5 @@ export default {
 <style>
   .el-menu-vertical-demo {
     width: 100px;
-  }
-  .content {
-    padding: 0 0 0 30px;
-    float: left;
-    width: 950px;
-    min-height: 680px;
   }
 </style>

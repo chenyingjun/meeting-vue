@@ -7,7 +7,7 @@
       background-color="#4D5054"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="nav">处理中心</el-menu-item>
+      <el-menu-item index="">处理中心</el-menu-item>
       <el-submenu index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
