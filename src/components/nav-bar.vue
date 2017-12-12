@@ -9,6 +9,7 @@
     </el-radio-group>-->
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo"
              @open="handleOpen" @close="handleClose"
+             active-text-color="#ffd04b"
              :collapse="isCollapse" @select="handleSelect">
       <el-submenu index="nav1">
         <template slot="title">

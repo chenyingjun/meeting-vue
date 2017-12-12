@@ -31,8 +31,18 @@ export default {
 
 <style>
   .child-container {
-    min-height: 680px;
+    min-height: 700px;
     margin-left: auto;
     margin-right: auto;
+  }
+  .el-aside {
+    /*background-color: #D3DCE6;*/
+    color: #333;
+  }
+
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    padding-top: 5px;
   }
 </style>

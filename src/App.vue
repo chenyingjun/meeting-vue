@@ -13,13 +13,14 @@
           <router-view class="child-container"/>
         </el-main>-->
       </el-container>
-      <el-footer>Footer</el-footer>
+        <foot-bar></foot-bar>
     </el-container>
   </div>
 </template>
 
 <script>
 import menuBar from '@/components/menu-bar'
+import footBar from '@/components/foot-bar'
 export default {
   name: 'app',
   data () {
@@ -28,7 +29,8 @@ export default {
     }
   },
   components: {
-    menuBar
+    menuBar,
+    footBar
   }
 }
 </script>
@@ -44,24 +46,8 @@ body {
   word-break: break-all;
 }
 
-.el-header, .el-footer {
-  background-color: #D3DCE6;
-  text-align: center;
+.el-header {
   padding: 0px;
-}
-.el-aside {
-  /*background-color: #D3DCE6;*/
-  color: #333;
-}
-
-.el-main {
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
 }
 
 .el-container:nth-child(5) .el-aside,
