@@ -15,6 +15,33 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/nav',
+      name: 'nav',
+      component: () => import('@/views/nav'),
+      children: [
+        {
+          path: 'nav1-demo1',
+          name: 'nav1-demo1',
+          component: () => import('@/views/nav1/demo1')
+        },
+        {
+          path: 'nav1-demo2',
+          name: 'nav1-demo2',
+          component: () => import('@/views/nav1/demo2')
+        },
+        {
+          path: 'nav1-demo3',
+          name: 'nav1-demo3',
+          component: () => import('@/views/nav1/demo3')
+        },
+        {
+          path: '/nav2',
+          name: 'nav2',
+          component: () => import('@/views/nav2')
+        }
+      ]
     }
   ]
 })
