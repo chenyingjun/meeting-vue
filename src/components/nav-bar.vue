@@ -3,11 +3,12 @@
     <el-radio-group v-model="isCollapse">
       <!--<el-radio-button :label="false">展开</el-radio-button>
       <el-radio-button :label="true">收起</el-radio-button>-->
-      <el-button @click="changeNav" :padding="navMenuPadding">
+      <el-button @click="changeNav" :style="navMenuPadding">
         <i class="el-icon-menu"></i>
       </el-button>
     </el-radio-group>
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
+    <el-menu default-active="1-4-1" class="el-menu-vertical-demo"
+             @open="handleOpen" @close="handleClose"
              :collapse="isCollapse" @select="handleSelect">
       <el-submenu index="1">
         <template slot="title">
@@ -44,7 +45,7 @@ export default {
   data () {
     return {
       isCollapse: true,
-      navMenuPadding: '4px 24px'
+      navMenuPadding: 'padding:4px 24px;border-radius: 0px;'
     }
   },
   watch: {
@@ -65,7 +66,7 @@ export default {
     },
     changeNav () {
       this.isCollapse = this.isCollapse ? false : true
-      this.navMenuPadding = this.isCollapse ? '4px 24px' : '4px 92px'
+      this.navMenuPadding = this.isCollapse ? 'padding:4px 24px;border-radius: 0px;' : 'padding:4px 92px;border-radius: 0px;'
     }
   }
 }

@@ -24,7 +24,7 @@ export default {
   name: 'app',
   data () {
     return {
-      asideWidth: '64px'
+      asideWidth: '65px'
     }
   },
   components: {
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     changeStatus (status) {
-      this.asideWidth = status ? '64px' : '200px'
+      this.asideWidth = status ? '65px' : '201px'
     }
   }
 }
@@ -50,7 +50,7 @@ body {
 }
 
 .el-header, .el-footer {
-  color: #333;
+  background-color: #D3DCE6;
   text-align: center;
   padding: 0px;
 }

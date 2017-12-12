@@ -3,9 +3,10 @@
     <el-menu
       :default-active="activeIndex2"
       mode="horizontal"
+      class="common-background el-menu-demo"
       @select="handleSelect"
-      background-color="#4D5054"
       text-color="#fff"
+      background-color="#545c64"
       active-text-color="#ffd04b">
       <el-menu-item index="">处理中心</el-menu-item>
       <el-submenu index="2">
