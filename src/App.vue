@@ -5,14 +5,12 @@
         <menu-bar></menu-bar>
       </el-header>
       <el-container>
-        <el-aside>
-          <nav-bar></nav-bar>
+        <el-aside :width="asideWidth">
+          <nav-bar @change="changeStatus"></nav-bar>
         </el-aside>
         <el-main>
           <router-view class="child-container"/>
-
         </el-main>
-
       </el-container>
       <el-footer>Footer</el-footer>
     </el-container>
@@ -24,9 +22,19 @@ import menuBar from '@/components/menu-bar'
 import navBar from '@/components/nav-bar'
 export default {
   name: 'app',
+  data () {
+    return {
+      asideWidth: '64px'
+    }
+  },
   components: {
     menuBar,
     navBar
+  },
+  methods: {
+    changeStatus (status) {
+      this.asideWidth = status ? '64px' : '200px'
+    }
   }
 }
 </script>
@@ -42,7 +50,6 @@ body {
 }
 
 .el-header, .el-footer {
-  background-color: #B3C0D1;
   color: #333;
   text-align: center;
   padding: 0px;
@@ -50,7 +57,6 @@ body {
 .el-aside {
   background-color: #D3DCE6;
   color: #333;
-  text-align: center;
 }
 
 .el-main {

@@ -1,8 +1,11 @@
 <template>
   <div>
     <el-radio-group v-model="isCollapse">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
+      <!--<el-radio-button :label="false">展开</el-radio-button>
+      <el-radio-button :label="true">收起</el-radio-button>-->
+      <el-button @click="changeNav" :padding="navMenuPadding">
+        <i class="el-icon-menu"></i>
+      </el-button>
     </el-radio-group>
     <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
              :collapse="isCollapse" @select="handleSelect">
@@ -25,7 +28,7 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="helloWord">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-bell"></i>
         <span slot="title">导航二</span>
       </el-menu-item>
       <el-menu-item index="3">
@@ -40,7 +43,13 @@
 export default {
   data () {
     return {
-      isCollapse: true
+      isCollapse: true,
+      navMenuPadding: '4px 24px'
+    }
+  },
+  watch: {
+    isCollapse (val) {
+      this.$emit('change', val)
     }
   },
   methods: {
@@ -53,13 +62,18 @@ export default {
     handleSelect (key, keyPath) {
       console.log('select', key, keyPath)
       this.$router.push({name: key})
+    },
+    changeNav () {
+      this.isCollapse = this.isCollapse ? false : true
+      this.navMenuPadding = this.isCollapse ? '4px 24px' : '4px 92px'
     }
   }
 }
 </script>
 
 <style>
-  .el-menu-vertical-demo {
-    width: 100px;
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
   }
 </style>
