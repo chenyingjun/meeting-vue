@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/meeting-api':{
+        target: 'http://localhost:8282/meeting-api',
+        changeOrigin:true,
+        pathRewrite: {
+          '^/meeting-api': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

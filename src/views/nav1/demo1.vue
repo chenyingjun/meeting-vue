@@ -31,7 +31,7 @@
     <div class="table">
       <el-table
         ref="multipleTable"
-        :data="tableData3"
+        :data="orgList"
         border
         tooltip-effect="dark"
         style="width: 100%; font-size: 13px;"
@@ -44,39 +44,29 @@
           width="55">
         </el-table-column>
         <el-table-column
-          label="日期"
-          width="120">
-          <template scope="scope">{{ scope.row.date }}</template>
-        </el-table-column>
-        <el-table-column
           prop="name"
           label="姓名"
           width="114">
         </el-table-column>
         <el-table-column
-          prop="sex"
-          label="性别"
-          width="63">
+          prop="fullName"
+          label="全称"
+          width="114">
         </el-table-column>
         <el-table-column
-          prop="tel"
-          label="电话"
-          width="120">
+          prop="createDate"
+          label="创建时间"
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="tag"
-          label="标签"
-          width="90"
-          sortable>
-          <template scope="scope">
-            <div :class="[scope.row.tag === '家' ? 'tag-home' : 'tag-comp']">{{scope.row.tag}}</div>
-          </template>
+          prop="updateDate"
+          label="更新时间"
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址"
-          width="270"
-          show-overflow-tooltip>
+          prop="status"
+          label="状态"
+          width="114">
         </el-table-column>
         <el-table-column
           prop="todo"
@@ -97,7 +87,7 @@
         :page-size="15"
         layout="total, sizes, prev, pager, next, jumper"
         background
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
   </div>
@@ -126,134 +116,16 @@
           value: '选项5',
           label: '标签五'
         }],
-        tableData3: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '公司'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          sex: '男',
-          tel: '12343534321',
-          tag: '家'
-        }],
+        orgList: [],
         multipleSelection: [],
         input: '',
-        value: ''
+        value: '',
+        total: 0
       }
     },
     computed: {
       tableHeight () {
-        return this.tableData3.length > 10 ? 551 : (this.tableData3.length + 1) * 50 + 1
+        return this.orgList.length > 10 ? 551 : (this.orgList.length + 1) * 50 + 1
       }
     },
     methods: {
@@ -281,6 +153,24 @@
       handleCurrentChange (val) {
         console.log(`当前页: ${val}`)
       }
+    },
+    created () {
+      this.$http.get('/meeting-api/api/orgs/page', {
+        params: {
+          pageNum: '1',
+          pageSize: '2'
+        }
+      }).then((response) => {
+        console.log('--------------->' + response.data)
+        this.orgList = response.data.list
+        this.total = response.data.total
+        this.$message({
+          message: '调用服务端接口成功',
+          type: 'success'
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 </script>
