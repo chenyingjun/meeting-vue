@@ -51,15 +51,18 @@
         <el-table-column
           prop="fullName"
           label="全称"
+          show-overflow-tooltip
           width="114">
         </el-table-column>
         <el-table-column
           prop="createDate"
+          :formatter="dateFormat"
           label="创建时间"
           width="200">
         </el-table-column>
         <el-table-column
           prop="updateDate"
+          :formatter="dateFormat"
           label="更新时间"
           width="200">
         </el-table-column>
@@ -83,8 +86,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[15, 30, 50, 100]"
-        :page-size="15"
+        :page-sizes="[1, 2, 50, 100]"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         background
         :total="total">
@@ -94,6 +97,7 @@
 </template>
 
 <script>
+  import moment from 'moment'
   export default {
     name: 'nav1-demo1',
     data () {
@@ -120,12 +124,17 @@
         multipleSelection: [],
         input: '',
         value: '',
-        total: 0
+        total: 0,
+        pageSize: 1,
+        pageNum: 1
       }
     },
     computed: {
       tableHeight () {
-        return this.orgList.length > 10 ? 551 : (this.orgList.length + 1) * 50 + 1
+        if (this.orgList.length > 10) {
+          return 570
+        }
+//        return this.orgList.length > 10 ? 551 : (this.orgList.length + 1) * 50 + 1
       }
     },
     methods: {
@@ -148,20 +157,46 @@
 
       },
       handleSizeChange (val) {
+        this.pageSize = val
+        this.pageNum = 1
+        this.getPage()
         console.log(`每页 ${val} 条`)
       },
       handleCurrentChange (val) {
+        this.pageNum = val
         console.log(`当前页: ${val}`)
+      },
+      dateFormat (row, column) {
+        var date = row[column.property]
+        if (date) {
+          return moment(date).format('YYYY-MM-DD HH:mm:ss')
+        }
+      },
+      getPage () {
+        this.$http.get('/meeting-api/api/orgs/page', {
+          params: {
+            pageNum: this.pageNum,
+            pageSize: this.pageSize
+          }
+        }).then((response) => {
+          this.orgList = response.data.list
+          this.total = response.data.total
+          this.$message({
+            message: '调用服务端接口成功',
+            type: 'success'
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
       }
     },
     created () {
       this.$http.get('/meeting-api/api/orgs/page', {
         params: {
-          pageNum: '1',
-          pageSize: '2'
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
         }
       }).then((response) => {
-        console.log('--------------->' + response.data)
         this.orgList = response.data.list
         this.total = response.data.total
         this.$message({
