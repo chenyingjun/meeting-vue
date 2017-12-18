@@ -10,7 +10,6 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 
 Vue.use(ElementUI)
-Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -20,3 +19,12 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+window.getApi = (url, params, callback) => {
+  return axios.get(url, {
+    params: params
+  }).then((response) => {
+    callback(response.data)
+  }).catch((error) => {
+    console.log(error)
+  })
+}

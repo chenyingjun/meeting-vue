@@ -4,7 +4,7 @@
       <el-input
         placeholder="请输入关键字搜索"
         icon="search"
-        v-model="input"
+        v-model="qryName"
         :on-icon-click="handleIconClick"
         class="tool-input">
       </el-input>
@@ -25,7 +25,7 @@
         }"
         placeholder="选择时间" class="tool-select">
       </el-time-select>
-      <el-button type="primary" class="tool-qry">查询</el-button>
+      <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
       <el-button type="warning" class="tool-clear">清空条件</el-button>
     </div>
     <div class="table">
@@ -126,7 +126,8 @@
         value: '',
         total: 0,
         pageSize: 1,
-        pageNum: 1
+        pageNum: 1,
+        qryName: ''
       }
     },
     computed: {
@@ -160,11 +161,13 @@
         this.pageSize = val
         this.pageNum = 1
         this.getPage()
-        console.log(`每页 ${val} 条`)
       },
       handleCurrentChange (val) {
         this.pageNum = val
-        console.log(`当前页: ${val}`)
+        this.getPage()
+      },
+      queryBtn () {
+        this.getPage()
       },
       dateFormat (row, column) {
         var date = row[column.property]
@@ -173,39 +176,18 @@
         }
       },
       getPage () {
-        this.$http.get('/meeting-api/api/orgs/page', {
-          params: {
-            pageNum: this.pageNum,
-            pageSize: this.pageSize
-          }
-        }).then((response) => {
-          this.orgList = response.data.list
-          this.total = response.data.total
-          this.$message({
-            message: '调用服务端接口成功',
-            type: 'success'
-          })
-        }).catch((error) => {
-          console.log(error)
+        getApi('/meeting-api/api/orgs/page', {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          name: this.qryName
+        }, data => {
+          this.orgList = data.list
+          this.total = data.total
         })
       }
     },
     created () {
-      this.$http.get('/meeting-api/api/orgs/page', {
-        params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize
-        }
-      }).then((response) => {
-        this.orgList = response.data.list
-        this.total = response.data.total
-        this.$message({
-          message: '调用服务端接口成功',
-          type: 'success'
-        })
-      }).catch((error) => {
-        console.log(error)
-      })
+      this.getPage()
     }
   }
 </script>
