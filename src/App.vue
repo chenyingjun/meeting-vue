@@ -50,6 +50,15 @@ body {
   padding: 0px;
 }
 
+#app {
+  display: flex;
+  height: 100%;
+}
+
+html,body{
+  height: 100%;
+}
+
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {
   line-height: 260px;

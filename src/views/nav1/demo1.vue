@@ -2,29 +2,21 @@
   <div id="nav-demo1">
     <div class="content-tool">
       <el-input
+        clearable
         placeholder="请输入关键字搜索"
         icon="search"
         v-model="qryName"
         :on-icon-click="handleIconClick"
         class="tool-input">
       </el-input>
-      <el-select v-model="value" placeholder="标签" class="tool-select">
+      <el-select v-model="qryStatus" placeholder="状态" clearable class="tool-select">
         <el-option
-          v-for="item in options"
+          v-for="item in qryStatusList"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
-      <el-time-select
-        v-model="value1"
-        :picker-options="{
-          start: '08:30',
-          step: '00:15',
-          end: '18:30'
-        }"
-        placeholder="选择时间" class="tool-select">
-      </el-time-select>
       <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
       <el-button type="warning" class="tool-clear">清空条件</el-button>
     </div>
@@ -45,7 +37,7 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="姓名"
+          label="名称"
           width="114">
         </el-table-column>
         <el-table-column
@@ -102,23 +94,13 @@
     name: 'nav1-demo1',
     data () {
       return {
-        value1: '',
         currentPage: 1,
-        options: [{
-          value: '选项1',
-          label: '标签一'
+        qryStatusList: [{
+          value: '0',
+          label: '禁用'
         }, {
-          value: '选项2',
-          label: '标签二'
-        }, {
-          value: '选项3',
-          label: '标签三'
-        }, {
-          value: '选项4',
-          label: '标签四'
-        }, {
-          value: '选项5',
-          label: '标签五'
+          value: '1',
+          label: '可用'
         }],
         orgList: [],
         multipleSelection: [],
@@ -127,7 +109,8 @@
         total: 0,
         pageSize: 1,
         pageNum: 1,
-        qryName: ''
+        qryName: '',
+        qryStatus: ''
       }
     },
     computed: {
@@ -179,7 +162,8 @@
         getApi('/meeting-api/api/orgs/page', {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          name: this.qryName
+          name: this.qryName,
+          status: this.qryStatus
         }, data => {
           this.orgList = data.list
           this.total = data.total
