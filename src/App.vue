@@ -4,7 +4,7 @@
       <el-header>
         <menu-bar></menu-bar>
       </el-header>
-      <el-container>
+      <el-container style="flex: 1 0 auto;">
         <router-view />
         <!--<el-aside :width="asideWidth">
           <nav-bar @change="changeStatus"></nav-bar>
