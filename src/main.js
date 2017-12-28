@@ -18,11 +18,23 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
 window.getApi = (url, params, callback) => {
   return axios.get(url, {
     params: params
   }).then((response) => {
-    callback(response.data)
+    if (response.status === 200) {
+      if (response.data.code === 200) {
+        console.log(response.data.data)
+        callback(response.data.data)
+      } else if (response.data.code === 400) {
+        console.log(response.data.message)
+      } else {
+        console.log(response.data.message)
+      }
+    } else {
+      // console.log("请求失败")
+    }
   }).catch((error) => {
     console.log(error)
   })

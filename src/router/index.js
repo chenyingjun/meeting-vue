@@ -40,6 +40,16 @@ export default new Router({
           path: '/nav2',
           name: 'nav2',
           component: () => import('@/views/nav2')
+        },
+        {
+          path: '/mt-meeting',
+          name: 'mt-meeting',
+          component: () => import('@/views/meeting/meeting')
+        },
+        {
+          path: '/mt-meetingroom',
+          name: 'mt-meetingroom',
+          component: () => import('@/views/meeting/meetingroom')
         }
       ]
     }

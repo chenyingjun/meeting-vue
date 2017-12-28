@@ -4,26 +4,21 @@
       <el-input
         clearable
         placeholder="请输入关键字搜索"
-        icon="search"
         v-model="qryName"
         :on-icon-click="handleIconClick"
         class="tool-input">
       </el-input>
-      <el-select v-model="qryStatus" placeholder="状态" clearable class="tool-select">
-        <el-option
-          v-for="item in qryStatusList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <el-input v-model="minSeatNumber" placeholder="最小座位" class="find-input"
+                :maxlength="3"></el-input>
+      <el-input type="number" v-model="maxSeatNumber" placeholder="最大座位" class="find-input"
+                min="0" max="100" :maxlength="3"></el-input>
       <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
       <el-button type="warning" class="tool-clear">清空条件</el-button>
     </div>
     <div class="table">
       <el-table
         ref="multipleTable"
-        :data="orgList"
+        :data="meetingroomList"
         border
         tooltip-effect="dark"
         style="width: 100%; font-size: 13px;"
@@ -37,35 +32,23 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="名称"
-          width="114">
+          label="名称">
         </el-table-column>
         <el-table-column
-          prop="fullName"
-          label="全称"
-          show-overflow-tooltip
-          width="114">
+          prop="seatNumber"
+          label="座位数"
+          width="100">
         </el-table-column>
         <el-table-column
           prop="createDate"
           :formatter="dateFormat"
           label="创建时间"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="updateDate"
-          :formatter="dateFormat"
-          label="更新时间"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          label="状态"
-          width="114">
+          width="180">
         </el-table-column>
         <el-table-column
           prop="todo"
-          label="操作">
+          label="操作"
+          width="180">
           <template scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
             <el-button type="text" size="small" style="color: #FB4853;">删除</el-button>
@@ -91,34 +74,32 @@
 <script>
   import moment from 'moment'
   export default {
-    name: 'nav1-demo1',
+    name: 'mt-meetingroom',
     data () {
       return {
         currentPage: 1,
-        qryStatusList: [{
-          value: '0',
-          label: '禁用'
-        }, {
-          value: '1',
-          label: '可用'
-        }],
-        orgList: [],
+        meetingroomList: [],
         multipleSelection: [],
-        input: '',
-        value: '',
         total: 0,
         pageSize: 1,
         pageNum: 1,
         qryName: '',
-        qryStatus: ''
+        minSeatNumber: '',
+        maxSeatNumber: '',
+        minSeatNumberValue: ''
       }
     },
     computed: {
       tableHeight () {
-        if (this.orgList.length > 10) {
+        if (this.meetingroomList.length > 10) {
           return 570
         }
-//        return this.orgList.length > 10 ? 551 : (this.orgList.length + 1) * 50 + 1
+      }
+    },
+    watch: {
+      minSeatNumber (val) {
+        console.log(val)
+        this.minSeatNumber = 123
       }
     },
     methods: {
@@ -158,15 +139,19 @@
           return moment(date).format('YYYY-MM-DD HH:mm:ss')
         }
       },
+      checkNumber (val) {
+        console.log(val)
+        this.minSeatNumber = 123
+      },
       getPage () {
-        window.getApi('/meeting-api/api/orgs/page', {
+        window.getApi('/meeting-api/api/meetingRoom/page', {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
           name: this.qryName,
-          status: this.qryStatus
+          minSeatNumber: this.minSeatNumber,
+          maxSeatNumber: this.maxSeatNumber
         }, data => {
-          console.log(data)
-          this.orgList = data.list
+          this.meetingroomList = data.list
           this.total = data.total
         })
       }
@@ -203,6 +188,10 @@
   }
   .tool-qry, .tool-clear {
     margin-left: 20px !important;
+  }
+  .find-input {
+    margin-left: 20px;
+    width: 150px !important;
   }
   .tag-home, .tag-comp {
     width: 48px;

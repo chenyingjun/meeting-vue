@@ -37,6 +37,16 @@
         <i class="el-icon-setting"></i>
         <span slot="title">导航三</span>
       </el-menu-item>
+      <el-submenu index="mt">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span slot="title">会议管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="mt-meeting">会议</el-menu-item>
+          <el-menu-item index="mt-meetingroom">会议室</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -62,11 +72,10 @@ export default {
       console.log(key, keyPath)
     },
     handleSelect (key, keyPath) {
-      console.log('select', key, keyPath)
       this.$router.push({name: key})
     },
     changeNav () {
-      this.isCollapse = this.isCollapse ? false : true
+//      this.isCollapse = this.isCollapse ? false : true
       this.navMenuPadding = this.isCollapse ? 'padding:4px 24px;border-radius: 0px;' : 'padding:4px 92px;border-radius: 0px;'
     }
   }
