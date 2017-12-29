@@ -8,10 +8,16 @@
         :on-icon-click="handleIconClick"
         class="tool-input">
       </el-input>
-      <el-input v-model="minSeatNumber" placeholder="最小座位" class="find-input"
-                :maxlength="3"></el-input>
-      <el-input type="number" v-model="maxSeatNumber" placeholder="最大座位" class="find-input"
-                min="0" max="100" :maxlength="3"></el-input>
+      <!--<el-input v-model="minSeatNumber" placeholder="最小座位" class="find-input"
+                :maxlength="3"></el-input>-->
+      <div class="find-input el-input">
+        <input placeholder="最小座位" class="el-input__inner"
+               v-bind:value="minSeatNumber | changeNumber" :maxlength="30"
+               v-on:input="minSeatNumber = $event.target.value">
+      </div>
+
+      <el-input placeholder="最大座位" class="find-input"
+                :maxlength="3" v-model="maxSeatNumber"></el-input>
       <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
       <el-button type="warning" class="tool-clear">清空条件</el-button>
     </div>
@@ -96,10 +102,32 @@
         }
       }
     },
+    filters: {
+      'changeNumber': val => {
+        console.log('1', val, !/^[0-9]*$/.test(val))
+        if (!val) {
+          console.log('2', val, !/^[0-9]*$/.test(val))
+          return
+        }
+        if (!/^[0-9]*$/.test(val)) {
+          console.log('3', val, !/^[0-9]*$/.test(val))
+          val = val.substring(0, val.length - 1)
+        }
+        this.minSeatNumber = val
+        return val
+      }
+    },
     watch: {
-      minSeatNumber (val) {
-        console.log(val)
-        this.minSeatNumber = 123
+      maxSeatNumber (val) {
+        console.log(val, !/^[0-9]*$/.test(val))
+        if (!val) {
+          return
+        }
+        if (!/^[0-9]*$/.test(val)) {
+          console.log('nn', val, !/^[0-9]*$/.test(val))
+          val = val.substring(0, val.length - 1)
+          this.maxSeatNumber.replace('!/^[0-9]*$/', 'g')
+        }
       }
     },
     methods: {
