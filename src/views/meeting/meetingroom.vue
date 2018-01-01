@@ -104,7 +104,7 @@
     },
     filters: {
       'changeNumber': val => {
-        console.log('1', val, !/^[0-9]*$/.test(val))
+//        console.log('1', val, !/^[0-9]*$/.test(val))
         if (!val) {
           console.log('2', val, !/^[0-9]*$/.test(val))
           return
