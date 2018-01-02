@@ -1,15 +1,15 @@
 <template>
   <div id="nav-demo1">
     <div class="content-tool">
-      <el-input
+      <!--<el-input
         clearable
         placeholder="请输入关键字搜索"
         v-model="qryName"
         :on-icon-click="handleIconClick"
         class="tool-input">
       </el-input>
-      <!--<el-input v-model="minSeatNumber" placeholder="最小座位" class="find-input"
-                :maxlength="3"></el-input>-->
+      &lt;!&ndash;<el-input v-model="minSeatNumber" placeholder="最小座位" class="find-input"
+                :maxlength="3"></el-input>&ndash;&gt;
       <div class="find-input el-input">
         <input placeholder="最小座位" class="el-input__inner"
                v-bind:value="minSeatNumber | changeNumber" :maxlength="30"
@@ -19,7 +19,28 @@
       <el-input placeholder="最大座位" class="find-input"
                 :maxlength="3" v-model="maxSeatNumber"></el-input>
       <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
-      <el-button type="warning" class="tool-clear">清空条件</el-button>
+      <el-button type="warning" class="tool-clear">清空条件</el-button>-->
+      <el-form :inline="true" :model="queryForm" ref="queryForm" class="demo-form-inline">
+
+        <el-form-item prop="qryName">
+          <el-input
+            clearable
+            placeholder="请输入关键字搜索"
+            v-model="queryForm.qryName"
+            :on-icon-click="handleIconClick"
+            class="tool-input">
+          </el-input>
+        </el-form-item>
+        <div class="find-input el-input">
+          <input placeholder="最小座位" class="el-input__inner"
+                 v-bind:value="queryForm.minSeatNumber | changeNumber" :maxlength="30"
+                 v-on:input="queryForm.minSeatNumber = $event.target.value">
+        </div>
+        <!--<el-input placeholder="最大座位" class="find-input"-->
+                  <!--:maxlength="3" v-model="queryForm.maxSeatNumber"></el-input>-->
+        <el-button type="primary" class="tool-qry" v-on:click="queryBtn">查询</el-button>
+        <el-button type="warning" class="tool-clear" @click="resetForm('queryForm')">清空条件</el-button>
+      </el-form>
     </div>
     <div class="table">
       <el-table
@@ -89,10 +110,11 @@
         total: 0,
         pageSize: 1,
         pageNum: 1,
-        qryName: '',
-        minSeatNumber: '',
-        maxSeatNumber: '',
-        minSeatNumberValue: ''
+        queryForm: {
+          qryName: '',
+          minSeatNumber: '',
+          maxSeatNumber: ''
+        }
       }
     },
     computed: {
@@ -110,26 +132,25 @@
           return
         }
         if (!/^[0-9]*$/.test(val)) {
-          console.log('3', val, !/^[0-9]*$/.test(val))
           val = val.substring(0, val.length - 1)
+          console.log('3', val, !/^[0-9]*$/.test(val))
         }
-        this.minSeatNumber = val
         return val
       }
     },
-    watch: {
-      maxSeatNumber (val) {
-        console.log(val, !/^[0-9]*$/.test(val))
-        if (!val) {
-          return
-        }
-        if (!/^[0-9]*$/.test(val)) {
-          console.log('nn', val, !/^[0-9]*$/.test(val))
-          val = val.substring(0, val.length - 1)
-          this.maxSeatNumber.replace('!/^[0-9]*$/', 'g')
-        }
-      }
-    },
+//    watch: {
+//      maxSeatNumber (val) {
+//        console.log(val, !/^[0-9]*$/.test(val))
+//        if (!val) {
+//          return
+//        }
+//        if (!/^[0-9]*$/.test(val)) {
+//          console.log('nn', val, !/^[0-9]*$/.test(val))
+//          val = val.substring(0, val.length - 1)
+//          this.maxSeatNumber.replace('!/^[0-9]*$/', 'g')
+//        }
+//      }
+//    },
     methods: {
       toggleSelection (rows) {
         if (rows) {
@@ -161,23 +182,22 @@
       queryBtn () {
         this.getPage()
       },
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
+      },
       dateFormat (row, column) {
         var date = row[column.property]
         if (date) {
           return moment(date).format('YYYY-MM-DD HH:mm:ss')
         }
       },
-      checkNumber (val) {
-        console.log(val)
-        this.minSeatNumber = 123
-      },
       getPage () {
         window.getApi('/meeting-api/api/meetingRoom/page', {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          name: this.qryName,
-          minSeatNumber: this.minSeatNumber,
-          maxSeatNumber: this.maxSeatNumber
+          name: this.queryForm.qryName,
+          minSeatNumber: this.queryForm.minSeatNumber,
+          maxSeatNumber: this.queryForm.maxSeatNumber
         }, data => {
           this.meetingroomList = data.list
           this.total = data.total
