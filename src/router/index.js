@@ -50,6 +50,11 @@ export default new Router({
           path: '/mt-meetingroom',
           name: 'mt-meetingroom',
           component: () => import('@/views/meeting/meetingroom')
+        },
+        {
+          path: '/mt-meetingroom/edit',
+          name: 'mt-meetingroom/edit',
+          component: () => import('@/views/meeting/meetingroomEdit')
         }
       ]
     }

@@ -165,7 +165,7 @@
         this.multipleSelection = val
       },
       handleClick () {
-
+        this.$router.push({ path: '/mt-meetingroom/edit'})
       },
       handleIconClick () {
 
