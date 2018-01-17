@@ -77,7 +77,7 @@
           label="操作"
           width="180">
           <template scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="handleClick(scope.row.id)" type="text" size="small">编辑</el-button>
             <el-button type="text" size="small" style="color: #FB4853;">删除</el-button>
           </template>
         </el-table-column>
@@ -164,8 +164,8 @@
       handleSelectionChange (val) {
         this.multipleSelection = val
       },
-      handleClick () {
-        this.$router.push({ path: '/mt-meetingroom/edit'})
+      handleClick (id) {
+        this.$router.push({ path: '/mt-meetingroom/edit/' + id})
       },
       handleIconClick () {
 
